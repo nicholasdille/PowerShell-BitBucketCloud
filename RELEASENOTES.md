@@ -1,3 +1,7 @@
+# 0.1.5
+
+- Fixed dependency
+
 # 0.1.4
 
 - Fixed dependency on Helpers
