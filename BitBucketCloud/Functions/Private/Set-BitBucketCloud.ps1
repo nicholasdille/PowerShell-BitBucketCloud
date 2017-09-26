@@ -1,5 +1,5 @@
 ﻿function Set-BitBucketCloud {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Low')]
     param(
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -16,8 +16,21 @@
         [string]
         $Team = ''
     )
+    
+    begin {
+        if (-not $PSBoundParameters.ContainsKey('Confirm')) {
+            $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
+        }
+        if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
+            $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
+        }
+    }
 
-    $script:BitBucketCloudUser  = $User
-    $script:BitBucketCloudToken = $Token
-    $script:BitBucketCloudTeam  = $Team
+    process {
+        if ($Force -or $PSCmdlet.ShouldProcess("ShouldProcess?")) {
+            $script:BitBucketCloudUser  = $User
+            $script:BitBucketCloudToken = $Token
+            $script:BitBucketCloudTeam  = $Team
+        }
+    }
 }
