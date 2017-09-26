@@ -1,3 +1,8 @@
+# 0.1.11
+
+- Updated build tools
+- Improved quality by using script analyzer
+
 # 0.1.5
 
 - Fixed dependency
