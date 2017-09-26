@@ -27,7 +27,7 @@
     }
 
     process {
-        if ($Force -or $PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        if ($Force -or $PSCmdlet.ShouldProcess("Update credentials to use team '$Team' and user '$User'?")) {
             $script:BitBucketCloudUser  = $User
             $script:BitBucketCloudToken = $Token
             $script:BitBucketCloudTeam  = $Team
