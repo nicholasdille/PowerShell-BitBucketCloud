@@ -1,3 +1,9 @@
+# 0.1.12
+
+- Support for adding and removing users from groups
+- Support for adding and removing permissions on repositories
+- Support for removing user from team (groups and repos)
+
 # 0.1.11
 
 - Updated build tools
