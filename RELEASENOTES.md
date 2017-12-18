@@ -1,4 +1,4 @@
-# 0.1.13
+# 0.1.14
 
 - Support for adding and removing users from groups
 - Support for adding and removing permissions on repositories

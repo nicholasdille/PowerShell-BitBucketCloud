@@ -39,4 +39,5 @@ function Block-BitBucketCloudUser {
                 Remove-BitBucketCloudPrivilege -Repository $Privilege.Repository.Substring($Team.Length + 1) -User $User
             }
         }
+    }
 }
