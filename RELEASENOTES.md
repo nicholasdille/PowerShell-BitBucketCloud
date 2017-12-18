@@ -1,8 +1,9 @@
-# 0.1.12
+# 0.1.13
 
 - Support for adding and removing users from groups
 - Support for adding and removing permissions on repositories
 - Support for removing user from team (groups and repos)
+- Support for ShouldProcess
 
 # 0.1.11
 
