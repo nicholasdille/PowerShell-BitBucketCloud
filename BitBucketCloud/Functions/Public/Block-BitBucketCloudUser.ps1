@@ -1,5 +1,5 @@
 function Block-BitBucketCloudUser {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
     param(
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -11,18 +11,32 @@ function Block-BitBucketCloudUser {
         [string]
         $User
     )
-
-    if (-Not $PSBoundParameters.ContainsKey('Team')) {
-        $Team = (Get-BitBucketCloud).Team
+    
+    begin {
+        if (-not $PSBoundParameters.ContainsKey('Confirm')) {
+            $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
+        }
+        if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
+            $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
+        }
     }
 
-    $Groups = Get-BitBucketCloudGroup | Where-Object { $_.Members -contains 'zakagreenfield' }
-    Foreach ($Group in $Groups) {
-        Remove-BitBucketCloudMember -Group $Group.Name -User $User
-    }
+    process {
+        if (-Not $PSBoundParameters.ContainsKey('Team')) {
+            $Team = (Get-BitBucketCloud).Team
+        }
 
-    $Privileges = Get-BitBucketCloudPrivilege | Where-Object { $_.User -like 'nicholasdille' }
-    Foreach ($Privilege in $Privileges) {
-        Remove-BitBucketCloudPrivilege -Repository $Privilege.Repository.Substring($Team.Length + 1) -User $User
-    }
+        if ($Force -or $PSCmdlet.ShouldProcess("Remove user from all groups?")) {
+            $Groups = Get-BitBucketCloudGroup | Where-Object { $_.Members -contains 'zakagreenfield' }
+            Foreach ($Group in $Groups) {
+                Remove-BitBucketCloudMember -Group $Group.Name -User $User
+            }
+        }
+
+        if ($Force -or $PSCmdlet.ShouldProcess("Remove user from all repositories?")) {
+            $Privileges = Get-BitBucketCloudPrivilege | Where-Object { $_.User -like 'nicholasdille' }
+            Foreach ($Privilege in $Privileges) {
+                Remove-BitBucketCloudPrivilege -Repository $Privilege.Repository.Substring($Team.Length + 1) -User $User
+            }
+        }
 }

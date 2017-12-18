@@ -1,5 +1,5 @@
 function Remove-BitBucketCloudMember {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
     param(
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -16,12 +16,25 @@ function Remove-BitBucketCloudMember {
         [string]
         $User
     )
-
-    if (-Not $PSBoundParameters.ContainsKey('Team')) {
-        $Team = (Get-BitBucketCloud).Team
+    
+    begin {
+        if (-not $PSBoundParameters.ContainsKey('Confirm')) {
+            $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
+        }
+        if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
+            $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
+        }
     }
 
-    $GroupObject = Get-BitBucketCloudGroup | Where-Object { $_.Name -like $Group }
+    process {
+        if (-Not $PSBoundParameters.ContainsKey('Team')) {
+            $Team = (Get-BitBucketCloud).Team
+        }
 
-    Invoke-BitBucketCloudApi -ApiVersion 1.0 -Path "/groups/$Team/$($GroupObject.Slug)/members/$User" -Method Delete
+        $GroupObject = Get-BitBucketCloudGroup | Where-Object { $_.Name -like $Group }
+
+        if ($Force -or $PSCmdlet.ShouldProcess("Remove user from group '$Group'?")) {
+            Invoke-BitBucketCloudApi -ApiVersion 1.0 -Path "/groups/$Team/$($GroupObject.Slug)/members/$User" -Method Delete
+        }
+    }
 }
