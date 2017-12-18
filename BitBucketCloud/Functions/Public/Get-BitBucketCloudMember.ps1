@@ -11,5 +11,5 @@ function Get-BitBucketCloudMember {
         $Team = (Get-BitBucketCloud).Team
     }
 
-    Get-BitBucketPrivilege -Team $Team | Select-Object -ExpandProperty User -Unique
+    Get-BitBucketCloudPrivilege | Select-Object -ExpandProperty User -Unique
 }

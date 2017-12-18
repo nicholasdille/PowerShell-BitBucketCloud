@@ -13,13 +13,14 @@ function Get-BitBucketCloudGroup {
 
     $Values = Invoke-BitBucketCloudApi -ApiVersion 1.0 -Path "/groups/$Team"
 
-    foreach ($Group in $Values) {
+    foreach ($Item in $Values) {
         [pscustomobject]@{
-            Name       = $Group.name
-            Permission = $Group.permission
-            AutoAdd    = $Group.auto_add
-            Owner      = $Group.owner.username
-            Members    = $Group.members.username
+            Name       = $Item.name
+            Permission = $Item.permission
+            AutoAdd    = $Item.auto_add
+            Owner      = $Item.owner.username
+            Members    = $Item.members.username
+            Slug       = $Item.slug
         }
     }
 }

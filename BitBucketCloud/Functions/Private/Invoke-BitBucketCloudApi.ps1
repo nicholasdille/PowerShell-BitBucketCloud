@@ -28,6 +28,11 @@ function Invoke-BitBucketCloudApi {
         [ValidateNotNullOrEmpty()]
         [string]
         $Accept = 'application/json'
+        ,
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Body
     )
 
     if ($Headers.ContainsKey('Accept')) {
@@ -52,7 +57,17 @@ function Invoke-BitBucketCloudApi {
         $Values
 
     } elseif ($ApiVersion -eq '1.0') {
-        $Response = Invoke-AuthenticatedWebRequest -Uri "https://api.bitbucket.org/$ApiVersion$Path" -Method $Method -User $BitBucket.User -Token $BitBucket.Token -Headers $Headers
+        $IwrParams = @{
+            Uri     = "https://api.bitbucket.org/$ApiVersion$Path"
+            Method  = $Method
+            User    = $BitBucket.User
+            Token   = $BitBucket.Token
+            Headers = $Headers
+        }
+        if ($Body) {
+            $IwrParams.Add('Body', $Body)
+        }
+        $Response = Invoke-AuthenticatedWebRequest @IwrParams
         $Json = $Response.Content | ConvertFrom-Json
         $Json
     }
