@@ -1,6 +1,6 @@
 @{
     RootModule = 'BitBucketCloud.psm1'
-    ModuleVersion = '0.1.0'
+    ModuleVersion = '0.2.0'
     GUID = 'bd342995-e2aa-42f5-b33e-447c4886250b'
     Author = 'Nicholas Dille'
     #CompanyName = ''
