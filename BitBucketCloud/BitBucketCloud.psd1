@@ -10,7 +10,7 @@
     RequiredModules = @(
         @{
             ModuleName = 'Helpers'
-            RequiredVersion = '0.1.12'
+            RequiredVersion = '0.1.10'
         },
         @{
             ModuleName = 'WebRequest'
