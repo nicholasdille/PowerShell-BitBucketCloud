@@ -9,12 +9,8 @@
     # PowerShellVersion = ''
     RequiredModules = @(
         @{
-            ModuleName = 'Helpers'
-            RequiredVersion = '0.1.12'
-        },
-        @{
             ModuleName = 'WebRequest'
-            RequiredVersion = '0.1.20'
+            RequiredVersion = '0.2.0.26'
         }
     )
     FunctionsToExport = @(
