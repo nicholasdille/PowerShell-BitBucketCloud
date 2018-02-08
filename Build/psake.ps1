@@ -29,7 +29,21 @@ Task Init {
     "`n"
 }
 
-Task Analysis -Depends Init {
+Task Deps {
+    $ModuleNames = $Manifest.RequiredModules.ModuleName
+    $Modules = Find-Module -Name $ModuleNames
+
+    $Manifest.RequiredModules | ForEach-Object {
+        $RequiredModule = $_
+        $Module = $Modules | Where-Object { $_.Name -ieq $RequiredModule.ModuleName }
+
+        if ($Module.Version -gt $RequiredModule.RequiredVersion) {
+            Write-Warning "Updated version <$($Module.Version)> found for required module <$($RequiredModule.ModuleName)/$($RequiredModule.RequiredVersion)>"
+        }
+    }
+}
+
+Task Analysis -Depends Init,Deps {
     $lines
 
     if ($env:SkipScriptAnalysis) {
@@ -81,7 +95,7 @@ Task Test -Depends Init,Analysis  {
 
     $TestResults.CodeCoverage | ConvertTo-Json -Depth 5 | Set-Content -Path "$env:BHProjectPath\CodeCoverage_PS$PSVersion`_$TimeStamp.json"
     $CodeCoverage = Get-CodeCoverageMetric -CodeCoverage $TestResults.CodeCoverage
- 
+
     "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
