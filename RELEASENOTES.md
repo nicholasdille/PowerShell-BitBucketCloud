@@ -1,3 +1,8 @@
+# 0.2.0.26
+
+- Added required modules to manifest
+- Moved build tools to separate repository
+
 # 0.1.14
 
 - Support for adding and removing users from groups
