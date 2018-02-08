@@ -7,7 +7,16 @@
     Copyright = '(c) 2017 Nicholas Dille. All rights reserved.'
     Description = 'Cmdlets for Atlassian BitBucket Cloud'
     # PowerShellVersion = ''
-    # RequiredModules = @()
+    RequiredModules = @(
+        @{
+            ModuleName = 'Helpers'
+            #ModuleVersion = '0.1.12'
+        },
+        @{
+            ModuleName = 'WebRequest'
+            #ModuleVersion = '0.1.20'
+        }
+    )
     FunctionsToExport = @(
         'Set-BitBucketCloud'
 
