@@ -10,11 +10,11 @@
     RequiredModules = @(
         @{
             ModuleName = 'Helpers'
-            #ModuleVersion = '0.1.12'
+            RequiredVersion = '0.1.12'
         },
         @{
             ModuleName = 'WebRequest'
-            #ModuleVersion = '0.1.20'
+            RequiredVersion = '0.1.20'
         }
     )
     FunctionsToExport = @(
