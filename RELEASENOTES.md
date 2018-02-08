@@ -1,6 +1,6 @@
 # Release Notes
 
-## 0.2.0.27
+## 0.2.0.29
 
 - Added required modules
 
