@@ -27,6 +27,5 @@ test_script:
     Invoke-WebRequest -Uri $Release.zipball_url -OutFile Build.zip;
     Expand-Archive -Path '.\Build.zip' -DestinationPath .;
     Remove-Item -Path '.\Build.zip';
-    Get-Item -Path nicholasdille-PowerShell-Build-* | Rename-Item -NewName 'Build2';
-    Get-ChildItem -Recurse -File | % FullName;
-    .\Build2\Start-Build.ps1 -Task Deploy
+    Get-Item -Path nicholasdille-PowerShell-Build-* | Rename-Item -NewName 'BuildTools';
+    .\BuildTools\Build\Start-Build.ps1 -Task Deploy
