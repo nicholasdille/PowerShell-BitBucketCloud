@@ -1,5 +1,9 @@
 # Release Notes
 
+## 0.2.1.31
+
+- Removed hardcoded values with parameter variable
+
 ## 0.2.0.29
 
 - Added required modules
