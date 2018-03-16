@@ -1,8 +1,9 @@
 # Release Notes
 
-## 0.2.1.31
+## 0.2.1.33
 
 - Removed hardcoded values with parameter variable
+- GitHub requires TLS 1.2 now
 
 ## 0.2.0.29
 
