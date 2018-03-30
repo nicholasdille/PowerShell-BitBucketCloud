@@ -1,5 +1,9 @@
 # Release Notes
 
+## 0.3.0.34
+
+- Removed dependency on module WebRequest
+
 ## 0.2.1.33
 
 - Removed hardcoded values with parameter variable
