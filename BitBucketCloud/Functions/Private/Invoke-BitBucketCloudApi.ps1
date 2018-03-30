@@ -1,5 +1,5 @@
 ﻿#requires -Version 4
-#requires -Modules WebRequest
+#requires -Modules Helpers
 
 function Invoke-BitBucketCloudApi {
     [CmdletBinding()]
@@ -37,18 +37,20 @@ function Invoke-BitBucketCloudApi {
 
     if ($Headers.ContainsKey('Accept')) {
         $Headers.Accept = $Accept
-    
+
     } else {
         $Headers.Add('Accept', $Accept)
     }
 
     $BitBucket = Get-BitBucketCloud
+    $AuthString = Get-BasicAuthentication -User $BitBucket.User -Token $BitBucket.Token
+    $Headers.Add('Authorization', "Basic $AuthString")
 
     if ($ApiVersion -eq '2.0') {
         $Values = @()
         $NextPageUri = "https://api.bitbucket.org/$ApiVersion$Path"
         while ($NextPageUri) {
-            $Response = Invoke-AuthenticatedWebRequest -Uri $NextPageUri -Method $Method -User $BitBucket.User -Token $BitBucket.Token -Headers $Headers
+            $Response = Invoke-WebRequest -Uri $NextPageUri -Method $Method -Headers $Headers
             $Json = $Response.Content | ConvertFrom-Json
             $Values += $Json.values
 
@@ -60,14 +62,12 @@ function Invoke-BitBucketCloudApi {
         $IwrParams = @{
             Uri     = "https://api.bitbucket.org/$ApiVersion$Path"
             Method  = $Method
-            User    = $BitBucket.User
-            Token   = $BitBucket.Token
             Headers = $Headers
         }
         if ($Body) {
             $IwrParams.Add('Body', $Body)
         }
-        $Response = Invoke-AuthenticatedWebRequest @IwrParams
+        $Response = Invoke-WebRequest @IwrParams
         $Json = $Response.Content | ConvertFrom-Json
         $Json
     }
