@@ -6,17 +6,17 @@
         [string]
         $User
         ,
-        [Parameter(Mandatory)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Token
+        $Token = (Read-Host -Prompt 'Password' -AsSecureString | Get-PlaintextFromSecureString)
         ,
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
         $Team = ''
     )
-    
+
     begin {
         if (-not $PSBoundParameters.ContainsKey('Confirm')) {
             $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
