@@ -11,7 +11,7 @@ function Block-BitBucketCloudUser {
         [string]
         $User
     )
-    
+
     begin {
         if (-not $PSBoundParameters.ContainsKey('Confirm')) {
             $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
@@ -33,11 +33,6 @@ function Block-BitBucketCloudUser {
             }
         }
 
-        if ($Force -or $PSCmdlet.ShouldProcess("Remove user from all repositories?")) {
-            $Privileges = Get-BitBucketCloudPrivilege | Where-Object { $_.User -like $User }
-            Foreach ($Privilege in $Privileges) {
-                Remove-BitBucketCloudPrivilege -Repository $Privilege.Repository.Substring($Team.Length + 1) -User $User
-            }
-        }
+        Write-Warning ('Unable to remove user {0} from repositories because the BitBucket API v2 does not support this.' -f $User)
     }
 }

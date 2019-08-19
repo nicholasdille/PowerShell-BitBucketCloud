@@ -24,10 +24,7 @@
         'Get-BitBucketCloudMember'
         'Remove-BitBucketCloudMember'
 
-        'Add-BitBucketCloudPrivilege'
         'Get-BitBucketCloudPrivilege'
-        'Remove-BitBucketCloudPrivilege'
-
         'Block-BitBucketCloudUser'
 
         'Get-BitBucketCloudRepository'
